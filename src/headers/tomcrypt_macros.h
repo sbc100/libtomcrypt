@@ -10,7 +10,7 @@
 /* this is the "32-bit at least" data type 
  * Re-define it to suit your platform but it must be at least 32-bits 
  */
-#if defined(__x86_64__) || (defined(__sparc__) && defined(__arch64__))
+#if !defined(__native_client__) && defined(__x86_64__) || (defined(__sparc__) && defined(__arch64__))
    typedef unsigned ulong32;
 #else
    typedef unsigned long ulong32;
@@ -67,7 +67,7 @@
 
 #ifdef ENDIAN_LITTLE
 
-#if !defined(LTC_NO_BSWAP) && (defined(INTEL_CC) || (defined(__GNUC__) && (defined(__DJGPP__) || defined(__CYGWIN__) || defined(__MINGW32__) || defined(__i386__) || defined(__x86_64__))))
+#if !defined(LTC_NO_BSWAP) && (defined(INTEL_CC) || (defined(__GNUC__) && (defined(__DJGPP__) || defined(__CYGWIN__) || defined(__MINGW32__) || defined(__i386__) || defined(__x86_64__) && !defined(__native_client__))))
 
 #define STORE32H(x, y)           \
 asm __volatile__ (               \
@@ -98,7 +98,7 @@ asm __volatile__ (             \
 
 
 /* x86_64 processor */
-#if !defined(LTC_NO_BSWAP) && (defined(__GNUC__) && defined(__x86_64__))
+#if !defined(LTC_NO_BSWAP) && (defined(__GNUC__) && defined(__x86_64__) && !defined(__native_client__))
 
 #define STORE64H(x, y)           \
 asm __volatile__ (               \
@@ -341,7 +341,7 @@ static inline unsigned RORc(unsigned word, const int i)
 
 
 /* 64-bit Rotates */
-#if !defined(__STRICT_ANSI__) && defined(__GNUC__) && defined(__x86_64__) && !defined(LTC_NO_ASM)
+#if !defined(__STRICT_ANSI__) && defined(__GNUC__) && defined(__x86_64__) && !defined(LTC_NO_ASM) && !defined(__native_client__)
 
 static inline unsigned long ROL64(unsigned long word, int i)
 {

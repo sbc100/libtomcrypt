@@ -70,7 +70,7 @@ LTC_EXPORT int   LTC_CALL XSTRCMP(const char *s1, const char *s2);
 #endif
 
 /* detect amd64 */
-#if !defined(__STRICT_ANSI__) && defined(__x86_64__)
+#if !defined(__STRICT_ANSI__) && defined(__x86_64__) && !defined(__native_client__)
    #define ENDIAN_LITTLE
    #define ENDIAN_64BITWORD
    #define LTC_FAST
